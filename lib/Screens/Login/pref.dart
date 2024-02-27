@@ -23,9 +23,39 @@ class _PrefScreenState extends State<PrefScreen> {
     'English',
     'Bengali',
   ];
+
+  List<String> musicGenres = [
+    'Rock',
+    'Pop',
+    'Hip Hop',
+    'Jazz',
+    'Classical',
+    'Country',
+    'Blues',
+    'Folk',
+    'Reggae',
+    'Metal',
+  ];
+
+  List<String> listOfContents = ['Music', 'Podcast', 'AudioBook', 'Poem'];
+
+  // Assuming you're storing the selected genres in Hive as well, similar to languages
+  List preferredMusicGenres = Hive.box('settings').get('preferredMusicGenres',
+      defaultValue: ['Pop', 'Rock', 'Metal'])?.toList() as List;
+
+  List preferredFeatures = Hive.box('settings').get(
+    'preferredFeatures',
+    defaultValue: [
+      'Music',
+      'Podcast',
+      'AudioBook',
+      'Poem',
+    ],
+  )?.toList() as List;
+
   List<bool> isSelected = [true, false];
   List preferredLanguage = Hive.box('settings')
-      .get('preferredLanguage', defaultValue: ['Bengali'])?.toList() as List;
+      .get('preferredLanguage', defaultValue: ['English'])?.toList() as List;
   String region =
       Hive.box('settings').get('region', defaultValue: 'Bangladesh') as String;
 
@@ -37,13 +67,12 @@ class _PrefScreenState extends State<PrefScreen> {
           child: Stack(
             children: [
               Positioned(
-                left: MediaQuery.sizeOf(context).width / 1.85,
                 child: SizedBox(
                   width: MediaQuery.sizeOf(context).width,
                   height: MediaQuery.sizeOf(context).width,
                   child: const Image(
                     image: AssetImage(
-                      'assets/icon-white-trans.png',
+                      'assets/logo.png',
                     ),
                   ),
                 ),
@@ -472,9 +501,231 @@ class _PrefScreenState extends State<PrefScreen> {
                                     height: 20.0,
                                   ),
 
+                                  // Music Genre Selection
+                                  ListTile(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 5.0),
+                                    title: const Text(
+                                        'Which Features do you prefer?'),
+                                    trailing: Container(
+                                      padding: const EdgeInsets.only(
+                                          top: 5,
+                                          bottom: 5,
+                                          left: 10,
+                                          right: 10),
+                                      height: 57.0,
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        color: Colors.grey[900],
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Colors.black26,
+                                            blurRadius: 5.0,
+                                            offset: Offset(0.0, 3.0),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          preferredFeatures.isEmpty
+                                              ? 'None'
+                                              : preferredFeatures.join(', '),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.end,
+                                        ),
+                                      ),
+                                    ),
+                                    dense: true,
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                        isDismissible: true,
+                                        backgroundColor: Colors.transparent,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          final List checked =
+                                              List.from(preferredFeatures);
+                                          return StatefulBuilder(
+                                            builder: (BuildContext context,
+                                                StateSetter setStt) {
+                                              return BottomGradientContainer(
+                                                borderRadius:
+                                                    BorderRadius.circular(20.0),
+                                                child: Column(
+                                                  children: [
+                                                    Expanded(
+                                                      child: ListView.builder(
+                                                        physics:
+                                                            const BouncingScrollPhysics(),
+                                                        shrinkWrap: true,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                                0, 10, 0, 10),
+                                                        itemCount:
+                                                            listOfContents
+                                                                .length,
+                                                        itemBuilder:
+                                                            (context, idx) {
+                                                          return CheckboxListTile(
+                                                            activeColor:
+                                                                Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .secondary,
+                                                            value: checked
+                                                                .contains(
+                                                                    listOfContents[
+                                                                        idx]),
+                                                            title: Text(
+                                                                listOfContents[
+                                                                    idx]),
+                                                            onChanged:
+                                                                (bool? value) {
+                                                              if (value ==
+                                                                  true) {
+                                                                checked.add(
+                                                                    listOfContents[
+                                                                        idx]);
+                                                              } else {
+                                                                checked.remove(
+                                                                    listOfContents[
+                                                                        idx]);
+                                                              }
+                                                              setStt(() {});
+                                                            },
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                    // Add buttons for save/cancel actions if needed
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+
                                   const SizedBox(
                                     height: 20.0,
                                   ),
+
+                                  // Music Genre Selection
+                                  ListTile(
+                                    contentPadding:
+                                        EdgeInsets.symmetric(horizontal: 5.0),
+                                    title: const Text('Preferred Music Genres'),
+                                    trailing: Container(
+                                      padding: EdgeInsets.only(
+                                          top: 5,
+                                          bottom: 5,
+                                          left: 10,
+                                          right: 10),
+                                      height: 57.0,
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        color: Colors.grey[900],
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Colors.black26,
+                                            blurRadius: 5.0,
+                                            offset: Offset(0.0, 3.0),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          preferredMusicGenres.isEmpty
+                                              ? 'None'
+                                              : preferredMusicGenres.join(', '),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.end,
+                                        ),
+                                      ),
+                                    ),
+                                    dense: true,
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                        isDismissible: true,
+                                        backgroundColor: Colors.transparent,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          final List checked =
+                                              List.from(preferredMusicGenres);
+                                          return StatefulBuilder(
+                                            builder: (BuildContext context,
+                                                StateSetter setStt) {
+                                              return BottomGradientContainer(
+                                                borderRadius:
+                                                    BorderRadius.circular(20.0),
+                                                child: Column(
+                                                  children: [
+                                                    Expanded(
+                                                      child: ListView.builder(
+                                                        physics:
+                                                            const BouncingScrollPhysics(),
+                                                        shrinkWrap: true,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                                0, 10, 0, 10),
+                                                        itemCount:
+                                                            musicGenres.length,
+                                                        itemBuilder:
+                                                            (context, idx) {
+                                                          return CheckboxListTile(
+                                                            activeColor:
+                                                                Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .secondary,
+                                                            value: checked
+                                                                .contains(
+                                                                    musicGenres[
+                                                                        idx]),
+                                                            title: Text(
+                                                                musicGenres[
+                                                                    idx]),
+                                                            onChanged:
+                                                                (bool? value) {
+                                                              if (value ==
+                                                                  true) {
+                                                                checked.add(
+                                                                    musicGenres[
+                                                                        idx]);
+                                                              } else {
+                                                                checked.remove(
+                                                                    musicGenres[
+                                                                        idx]);
+                                                              }
+                                                              setStt(() {});
+                                                            },
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                    // Add buttons for save/cancel actions if needed
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+
+                                  // Add a spacer
+                                  const SizedBox(height: 20),
+
                                   GestureDetector(
                                     onTap: () {
                                       Navigator.popAndPushNamed(

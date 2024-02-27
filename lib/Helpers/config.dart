@@ -10,8 +10,8 @@ class MyTheme with ChangeNotifier {
   bool _useSystemTheme =
       Hive.box('settings').get('useSystemTheme', defaultValue: false) as bool;
 
-  String accentColor =
-      Hive.box('settings').get('themeColor', defaultValue: 'Teal') as String;
+  String accentColor = Hive.box('settings')
+      .get('themeColor', defaultValue: 'Deep Purple') as String;
   String canvasColor =
       Hive.box('settings').get('canvasColor', defaultValue: 'Grey') as String;
   String cardColor =
@@ -22,10 +22,11 @@ class MyTheme with ChangeNotifier {
   int bottomGrad =
       Hive.box('settings').get('bottomGrad', defaultValue: 3) as int;
 
-  int colorHue = Hive.box('settings').get('colorHue', defaultValue: 400) as int;
+  int colorHue = Hive.box('settings').get('colorHue', defaultValue: 200) as int;
   List<Color?>? playGradientColor;
 
   List<List<Color>> get backOpt => _backOpt;
+
   List<List<Color>> get cardOpt => _cardOpt;
 
   final List<List<Color>> _backOpt = [
@@ -123,7 +124,8 @@ class MyTheme with ChangeNotifier {
     _useSystemTheme =
         settingsBox.get('useSystemTheme', defaultValue: false) as bool;
 
-    accentColor = settingsBox.get('themeColor', defaultValue: 'Teal') as String;
+    accentColor =
+        settingsBox.get('themeColor', defaultValue: 'Deep Purple') as String;
     canvasColor =
         settingsBox.get('canvasColor', defaultValue: 'Grey') as String;
     cardColor = settingsBox.get('cardColor', defaultValue: 'Grey900') as String;
@@ -132,7 +134,7 @@ class MyTheme with ChangeNotifier {
     cardGrad = settingsBox.get('cardGrad', defaultValue: 4) as int;
     bottomGrad = settingsBox.get('bottomGrad', defaultValue: 3) as int;
 
-    colorHue = settingsBox.get('colorHue', defaultValue: 400) as int;
+    colorHue = settingsBox.get('colorHue', defaultValue: 100) as int;
     notifyListeners();
   }
 
@@ -194,19 +196,19 @@ class MyTheme with ChangeNotifier {
         return Colors.amberAccent[hue]!;
       case 'Indigo':
         return Colors.indigoAccent[hue]!;
-      case 'Purple':
+      case 'Deep Purple':
         return Colors.purpleAccent[hue]!;
+      case 'Purple':
+        return Colors.purple[hue]!;
       case 'Deep Orange':
         return Colors.deepOrangeAccent[hue]!;
-      case 'Deep Purple':
-        return Colors.deepPurpleAccent[hue]!;
       case 'Light Green':
         return Colors.lightGreenAccent[hue]!;
       case 'White':
         return Colors.white;
 
       default:
-        return _isDark ? Colors.purple[400]! : Colors.purple[500]!;
+        return _isDark ? Colors.purpleAccent[100]! : Colors.purpleAccent[200]!;
     }
   }
 
@@ -294,7 +296,7 @@ class MyTheme with ChangeNotifier {
         return Colors.white;
 
       default:
-        return _isDark ? Colors.purple[400]! : Colors.purple[600]!;
+        return _isDark ? Colors.purpleAccent[100]! : Colors.purpleAccent[200]!;
     }
   }
 

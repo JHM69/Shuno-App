@@ -78,6 +78,11 @@ flutter:
   # Enable generation of localized Strings from arb files.
   generate: true
 
+  fonts:
+    - family: ProductSans
+      fonts:
+        - asset: assets/font.ttf
+          weight: 400
   assets:
     # Add assets to the application.
     - assets/

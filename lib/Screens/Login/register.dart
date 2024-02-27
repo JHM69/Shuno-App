@@ -132,13 +132,12 @@ class _RegisterScreenState extends State<Register> {
           child: Stack(
             children: [
               Positioned(
-                left: MediaQuery.sizeOf(context).width / 1.85,
                 child: SizedBox(
                   width: MediaQuery.sizeOf(context).width,
                   height: MediaQuery.sizeOf(context).width,
                   child: const Image(
                     image: AssetImage(
-                      'assets/icon-white-trans.png',
+                      'assets/logo.png',
                     ),
                   ),
                 ),

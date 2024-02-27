@@ -14,6 +14,7 @@ class AppTheme {
     required BuildContext context,
   }) {
     return ThemeData(
+      fontFamily: 'ProductSans',
       textSelectionTheme: TextSelectionThemeData(
         selectionHandleColor: currentTheme.currentColor(),
         cursorColor: currentTheme.currentColor(),
@@ -36,11 +37,11 @@ class AppTheme {
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarIconBrightness: AppTheme.themeMode == ThemeMode.system
               ? MediaQuery.platformBrightnessOf(context) == Brightness.dark
-                  ? Brightness.light
-                  : Brightness.dark
+              ? Brightness.light
+              : Brightness.dark
               : AppTheme.themeMode == ThemeMode.dark
-                  ? Brightness.light
-                  : Brightness.dark,
+              ? Brightness.light
+              : Brightness.dark,
         ),
       ),
       cardTheme: CardTheme(
@@ -61,10 +62,10 @@ class AppTheme {
         size: 24.0,
       ),
       colorScheme: Theme.of(context).colorScheme.copyWith(
-            primary: Colors.grey[800],
-            brightness: Brightness.light,
-            secondary: currentTheme.currentColor(),
-          ),
+        primary: Colors.grey[800],
+        brightness: Brightness.light,
+        secondary: currentTheme.currentColor(),
+      ),
     );
   }
 
@@ -72,6 +73,7 @@ class AppTheme {
     required BuildContext context,
   }) {
     return ThemeData(
+      fontFamily: 'ProductSans',
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: Colors.white,
@@ -87,7 +89,7 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         focusedBorder: UnderlineInputBorder(
           borderSide:
-              BorderSide(width: 1.5, color: currentTheme.currentColor()),
+          BorderSide(width: 1.5, color: currentTheme.currentColor()),
         ),
       ),
       listTileTheme: ListTileThemeData(
@@ -120,10 +122,10 @@ class AppTheme {
       ),
       indicatorColor: currentTheme.currentColor(),
       colorScheme: Theme.of(context).colorScheme.copyWith(
-            primary: Colors.white,
-            secondary: currentTheme.currentColor(),
-            brightness: Brightness.dark,
-          ),
+        primary: Colors.white,
+        secondary: currentTheme.currentColor(),
+        brightness: Brightness.dark,
+      ),
     );
   }
 }

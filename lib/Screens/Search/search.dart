@@ -37,7 +37,9 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  String query = '';
+  String query = Hive.box('settings')
+      .get('preferredMusicGenres', defaultValue: 'pop')
+      .toString();
   bool fetchResultCalled = false;
   bool fetched = false;
   bool alertShown = false;

@@ -451,6 +451,21 @@ class FormatResponse {
         data['new_albums'] =
             await formatSongsInList(data['new_albums'] as List);
       }
+
+      if (data['songs'] != null) {
+        data['songs'] = await formatSongsInList(data['songs'] as List);
+      }
+      if (data['podcasts'] != null) {
+        data['podcasts'] = await formatSongsInList(data['podcasts'] as List);
+      }
+
+      if (data['audiobooks'] != null) {
+        data['audiobooks'] =
+            await formatSongsInList(data['audiobooks'] as List);
+      }
+      if (data['poems'] != null) {
+        data['poems'] = await formatSongsInList(data['poems'] as List);
+      }
       // if (data['city_mod'] != null) {
       //   data['city_mod'] = await formatSongsInList(data['city_mod'] as List);
       // }
@@ -473,6 +488,10 @@ class FormatResponse {
       data['collections'] = [
         'new_albums',
         'new_trending',
+        'songs',
+        'podcasts',
+        'audiobooks',
+        'poems',
         // 'charts',
         // 'new_albums',
         // 'tag_mixes',

@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const Spacer(), // Creates space between the image and the icons
                 IconButton(
-                  icon: const Icon(Icons.notification_add_outlined),
+                  icon: const Icon(Icons.notifications_outlined),
                   // Notification icon
                   onPressed: () {
                     Navigator.pushNamed(context, '/notification');
